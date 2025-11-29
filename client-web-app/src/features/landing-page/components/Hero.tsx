@@ -19,39 +19,64 @@ export function Hero() {
   const particlesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Ensure all elements are visible by default
+    if (titleRef.current) {
+      titleRef.current.style.opacity = '1';
+    }
+    if (subtitleRef.current) {
+      subtitleRef.current.style.opacity = '1';
+    }
+    if (ctaRef.current) {
+      Array.from(ctaRef.current.children).forEach((button) => {
+        (button as HTMLElement).style.opacity = '1';
+      });
+    }
+
     const ctx = gsap.context(() => {
       // Title animation with split text effect
       if (titleRef.current) {
-        gsap.from(titleRef.current, {
-          opacity: 0,
-          y: 80,
-          duration: 1.2,
-          ease: 'power4.out',
-        });
+        gsap.fromTo(
+          titleRef.current,
+          { opacity: 0, y: 80 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
+            ease: 'power4.out',
+          }
+        );
       }
 
       // Subtitle animation
       if (subtitleRef.current) {
-        gsap.from(subtitleRef.current, {
-          opacity: 0,
-          y: 40,
-          duration: 1,
-          delay: 0.3,
-          ease: 'power3.out',
-        });
+        gsap.fromTo(
+          subtitleRef.current,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            delay: 0.3,
+            ease: 'power3.out',
+          }
+        );
       }
 
       // CTA buttons with stagger
-      if (ctaRef.current) {
-        const buttons = ctaRef.current.children;
-        gsap.from(buttons, {
-          opacity: 0,
-          y: 30,
-          scale: 0.9,
-          duration: 0.8,
-          delay: 0.6,
-          stagger: 0.15,
-          ease: 'back.out(1.7)',
+      if (ctaRef.current && ctaRef.current.children.length > 0) {
+        Array.from(ctaRef.current.children).forEach((button, index) => {
+          gsap.fromTo(
+            button,
+            { opacity: 0, y: 30, scale: 0.9 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.8,
+              delay: 0.6 + index * 0.15,
+              ease: 'back.out(1.7)',
+            }
+          );
         });
       }
 
@@ -118,7 +143,7 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a]"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0a] pb-20"
     >
       {/* Animated mesh gradient background */}
       <div
@@ -147,7 +172,7 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex-1 flex flex-col items-center justify-center">
         <div className="mb-6">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-gray-300 mb-8">
             <span className="relative flex h-2 w-2">
@@ -184,7 +209,11 @@ export function Hero() {
           <span className="text-gray-500">All secured with end-to-end encryption.</span>
         </p>
 
-        <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div 
+          ref={ctaRef} 
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20 sm:mb-24"
+          style={{ opacity: 1 }}
+        >
           <Button
             size="lg"
             className="group text-lg px-8 py-6 bg-white text-black hover:bg-gray-100 transition-all duration-300 rounded-full font-semibold shadow-2xl hover:shadow-emerald-500/50"
@@ -203,7 +232,7 @@ export function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10">
         <div className="flex flex-col items-center gap-2">
           <span className="text-xs text-gray-500 uppercase tracking-wider">Scroll</span>
           <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-2">

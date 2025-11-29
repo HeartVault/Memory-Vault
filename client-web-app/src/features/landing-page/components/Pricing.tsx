@@ -82,37 +82,64 @@ export function Pricing() {
   const addOnsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Ensure elements are visible by default
+    if (titleRef.current) {
+      titleRef.current.style.opacity = '1';
+    }
+    if (cardsRef.current) {
+      Array.from(cardsRef.current.children).forEach((card) => {
+        (card as HTMLElement).style.opacity = '1';
+      });
+    }
+    if (addOnsRef.current) {
+      Array.from(addOnsRef.current.children).forEach((item) => {
+        (item as HTMLElement).style.opacity = '1';
+      });
+    }
+
     const ctx = gsap.context(() => {
       // Animate title
       if (titleRef.current) {
-        gsap.from(titleRef.current, {
-          opacity: 0,
-          y: 50,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none none',
-          },
-        });
+        gsap.fromTo(
+          titleRef.current,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+              toggleActions: 'play none none none',
+              once: true,
+            },
+          }
+        );
       }
 
       // Animate pricing cards
       const cards = cardsRef.current?.children;
-      if (cards) {
-        gsap.from(cards, {
-          opacity: 0,
-          y: 60,
-          scale: 0.95,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
-            toggleActions: 'play none none none',
-          },
+      if (cards && cards.length > 0) {
+        Array.from(cards).forEach((card, index) => {
+          gsap.fromTo(
+            card,
+            { opacity: 0, y: 60, scale: 0.95 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.8,
+              delay: index * 0.15,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 75%',
+                toggleActions: 'play none none none',
+                once: true,
+              },
+            }
+          );
         });
 
         // Hover animations
@@ -138,18 +165,25 @@ export function Pricing() {
       }
 
       // Animate add-ons
-      if (addOnsRef.current) {
-        gsap.from(addOnsRef.current.children, {
-          opacity: 0,
-          x: -30,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: addOnsRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-          },
+      if (addOnsRef.current && addOnsRef.current.children.length > 0) {
+        Array.from(addOnsRef.current.children).forEach((item, index) => {
+          gsap.fromTo(
+            item,
+            { opacity: 0, x: -30 },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 0.6,
+              delay: index * 0.1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: addOnsRef.current,
+                start: 'top 85%',
+                toggleActions: 'play none none none',
+                once: true,
+              },
+            }
+          );
         });
       }
     }, sectionRef);
@@ -188,6 +222,7 @@ export function Pricing() {
         <div
           ref={cardsRef}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20"
+          style={{ opacity: 1 }}
         >
           {pricingPlans.map((plan, index) => (
             <div
@@ -262,6 +297,7 @@ export function Pricing() {
           <div
             ref={addOnsRef}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto"
+            style={{ opacity: 1 }}
           >
             {addOns.map((addOn, index) => (
               <div

@@ -89,40 +89,59 @@ export function Features() {
   const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Ensure elements are visible by default
+    if (titleRef.current) {
+      titleRef.current.style.opacity = '1';
+    }
+    if (cardsRef.current) {
+      Array.from(cardsRef.current.children).forEach((card) => {
+        (card as HTMLElement).style.opacity = '1';
+      });
+    }
+
     const ctx = gsap.context(() => {
       // Animate title
       if (titleRef.current) {
-        gsap.from(titleRef.current, {
-          opacity: 0,
-          y: 50,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none none',
-          },
-        });
+        gsap.fromTo(
+          titleRef.current,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+              toggleActions: 'play none none none',
+              once: true,
+            },
+          }
+        );
       }
 
       // Animate cards with stagger and 3D effect
       const cards = cardsRef.current?.children;
-      if (cards) {
-        gsap.from(cards, {
-          opacity: 0,
-          y: 80,
-          rotationX: -15,
-          duration: 0.8,
-          stagger: {
-            amount: 0.6,
-            from: 'start',
-          },
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
-            toggleActions: 'play none none none',
-          },
+      if (cards && cards.length > 0) {
+        Array.from(cards).forEach((card, index) => {
+          gsap.fromTo(
+            card,
+            { opacity: 0, y: 80, rotationX: -15 },
+            {
+              opacity: 1,
+              y: 0,
+              rotationX: 0,
+              duration: 0.8,
+              delay: index * 0.1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 75%',
+                toggleActions: 'play none none none',
+                once: true,
+              },
+            }
+          );
         });
 
         // Hover animations
@@ -182,6 +201,7 @@ export function Features() {
         <div
           ref={cardsRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          style={{ opacity: 1 }}
         >
           {features.map((feature, index) => {
             const Icon = feature.icon;
