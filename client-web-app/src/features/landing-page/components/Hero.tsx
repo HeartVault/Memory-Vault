@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 import { Button } from '@/src/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
@@ -143,7 +144,7 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0a] pb-20"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0a] pb-20 pt-24 md:pt-28"
     >
       {/* Animated mesh gradient background */}
       <div
@@ -173,8 +174,8 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex-1 flex flex-col items-center justify-center">
-        <div className="mb-6">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-gray-300 mb-8">
+        <div className="mb-6 mt-4">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-gray-300">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -214,13 +215,15 @@ export function Hero() {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20 sm:mb-24"
           style={{ opacity: 1 }}
         >
-          <Button
-            size="lg"
-            className="group text-lg px-8 py-6 bg-white text-black hover:bg-gray-100 transition-all duration-300 rounded-full font-semibold shadow-2xl hover:shadow-emerald-500/50"
-          >
-            Start Free Trial
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link href="/auth/sign-up">
+            <Button
+              size="lg"
+              className="group text-lg px-8 py-6 bg-white text-black hover:bg-gray-100 transition-all duration-300 rounded-full font-semibold shadow-2xl hover:shadow-emerald-500/50"
+            >
+              Start Free Trial
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
           <Button
             size="lg"
             variant="outline"

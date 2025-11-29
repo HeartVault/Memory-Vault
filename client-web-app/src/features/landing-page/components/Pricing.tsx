@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 import { Button } from '@/src/components/ui/button';
 import { Check } from 'lucide-react';
 
@@ -276,15 +277,17 @@ export function Pricing() {
                 ))}
               </ul>
 
-              <Button
-                className={`w-full py-6 text-lg font-semibold rounded-full transition-all duration-300 ${
-                  plan.popular
-                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-emerald-500/50'
-                    : 'glass border border-white/20 text-white hover:bg-white/10'
-                }`}
-              >
-                {plan.cta}
-              </Button>
+              <Link href="/auth/sign-up" className="w-full">
+                <Button
+                  className={`w-full py-6 text-lg font-semibold rounded-full transition-all duration-300 ${
+                    plan.popular
+                      ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-emerald-500/50'
+                      : 'glass border border-white/20 text-white hover:bg-white/10'
+                  }`}
+                >
+                  {plan.cta}
+                </Button>
+              </Link>
             </div>
           ))}
         </div>
