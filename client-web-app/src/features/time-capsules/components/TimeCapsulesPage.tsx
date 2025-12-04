@@ -7,69 +7,7 @@ import { CreateTimeCapsuleForm } from './CreateTimeCapsuleForm';
 import { TimeCapsuleDetailModal } from './TimeCapsuleDetailModal';
 import { Filter } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-// Mock data - in production, this would come from an API
-const mockTimeCapsules: TimeCapsule[] = [
-  {
-    id: '1',
-    title: 'My 25th Birthday',
-    description: 'A collection of memories from my 25th birthday celebration with friends and family.',
-    unlockDate: new Date('2025-12-25T00:00:00'),
-    createdAt: new Date('2024-01-15'),
-    coverImage: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800',
-    mediaCount: { photos: 12, videos: 2, audio: 1, letters: 3 },
-    sharedWith: ['sarahj', 'emilyr'],
-    isUnlocked: false,
-    createdBy: { username: 'johndoe' },
-  },
-  {
-    id: '2',
-    title: 'College Graduation',
-    description: 'Memories from my college graduation day and all the achievements.',
-    unlockDate: new Date('2026-06-15T12:00:00'),
-    createdAt: new Date('2024-02-20'),
-    coverImage: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800',
-    mediaCount: { photos: 25, videos: 5, audio: 0, letters: 5 },
-    sharedWith: ['mchen', 'dthompson', 'mariag'],
-    isUnlocked: false,
-    createdBy: { username: 'johndoe' },
-  },
-  {
-    id: '3',
-    title: 'Summer 2024',
-    description: 'All the amazing adventures from summer 2024.',
-    unlockDate: new Date('2024-08-01T00:00:00'),
-    createdAt: new Date('2024-07-01'),
-    coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800',
-    mediaCount: { photos: 50, videos: 10, audio: 3, letters: 2 },
-    sharedWith: ['alexc'],
-    isUnlocked: true,
-    createdBy: { username: 'johndoe' },
-  },
-  {
-    id: '4',
-    title: 'New Year 2025',
-    description: 'Welcoming the new year with hope and dreams.',
-    unlockDate: new Date('2026-01-01T00:00:00'),
-    createdAt: new Date('2024-12-31'),
-    mediaCount: { photos: 8, videos: 1, audio: 0, letters: 1 },
-    sharedWith: [],
-    isUnlocked: false,
-    createdBy: { username: 'johndoe' },
-  },
-  {
-    id: '5',
-    title: 'Family Reunion 2024',
-    description: 'The best family reunion ever with three generations together.',
-    unlockDate: new Date('2025-07-04T00:00:00'),
-    createdAt: new Date('2024-07-04'),
-    coverImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800',
-    mediaCount: { photos: 35, videos: 8, audio: 5, letters: 10 },
-    sharedWith: ['sarahj', 'emilyr', 'mchen', 'dthompson', 'mariag'],
-    isUnlocked: false,
-    createdBy: { username: 'johndoe' },
-  },
-];
+import { MOCK_TIME_CAPSULES } from '@/src/constants/mocks';
 
 export function TimeCapsulesPage() {
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -78,7 +16,7 @@ export function TimeCapsulesPage() {
   const [filter, setFilter] = useState<'all' | 'locked' | 'unlocked'>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
-  const filteredCapsules = mockTimeCapsules.filter((capsule) => {
+  const filteredCapsules = MOCK_TIME_CAPSULES.filter((capsule) => {
     if (filter === 'locked') return !capsule.isUnlocked;
     if (filter === 'unlocked') return capsule.isUnlocked;
     return true;
@@ -122,7 +60,7 @@ export function TimeCapsulesPage() {
 
         {/* Stories Bar */}
         <TimeCapsuleStoriesBar
-          capsules={mockTimeCapsules.slice(0, 8)}
+          capsules={MOCK_TIME_CAPSULES.slice(0, 8)}
           onCreateNew={() => setShowCreateForm(true)}
         />
       </div>

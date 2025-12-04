@@ -61,13 +61,18 @@ export function Sidebar() {
         })}
 
         {/* Create */}
-        <Button
-          variant="ghost"
-          className="w-full justify-start gap-4 rounded-lg px-3 py-3 text-gray-300 hover:text-white hover:bg-white/5"
-        >
-          <Plus className="w-6 h-6 md:w-7 md:h-7 flex-shrink-0" />
-          <span className="hidden group-hover:block text-base transition-opacity duration-300 opacity-0 group-hover:opacity-100 whitespace-nowrap">Create</span>
-        </Button>
+        <Link href="/explore/create-post">
+          <Button
+            variant="ghost"
+            className={`w-full justify-start gap-4 rounded-lg px-3 py-3 ${pathname === '/explore/create-post'
+              ? 'bg-white/10 text-white font-semibold'
+              : 'text-gray-300 hover:text-white hover:bg-white/5'
+              }`}
+          >
+            <Plus className="w-6 h-6 md:w-7 md:h-7 flex-shrink-0" />
+            <span className="hidden group-hover:block text-base transition-opacity duration-300 opacity-0 group-hover:opacity-100 whitespace-nowrap">Create</span>
+          </Button>
+        </Link>
       </nav>
 
       {/* Bottom Actions */}

@@ -1,26 +1,11 @@
 'use client';
 
-interface Story {
-  id: string;
-  username: string;
-  avatar?: string;
-  isViewed: boolean;
-}
-
-const stories: Story[] = [
-  { id: '1', username: 'sarahj', isViewed: false },
-  { id: '2', username: 'mchen', isViewed: false },
-  { id: '3', username: 'emilyr', isViewed: true },
-  { id: '4', username: 'dthompson', isViewed: false },
-  { id: '5', username: 'mariag', isViewed: true },
-  { id: '6', username: 'jwilson', isViewed: false },
-  { id: '7', username: 'alexc', isViewed: false },
-];
+import { MOCK_STORIES } from '@/src/constants/mocks';
 
 export function StoriesBar() {
   return (
     <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 mb-6 px-4">
-      {stories.map((story) => (
+      {MOCK_STORIES.map((story) => (
         <div key={story.id} className="flex flex-col items-center gap-2 flex-shrink-0">
           <div
             className={`w-16 h-16 rounded-full p-0.5 ${

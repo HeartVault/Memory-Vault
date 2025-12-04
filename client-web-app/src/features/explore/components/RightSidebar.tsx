@@ -2,48 +2,11 @@
 
 import { Button } from '@/src/components/ui/button';
 import { User, MoreHorizontal } from 'lucide-react';
-
-interface SuggestedUser {
-  id: string;
-  name: string;
-  username: string;
-  avatar?: string;
-  isVerified?: boolean;
-}
-
-const suggestedUsers: SuggestedUser[] = [
-  {
-    id: '1',
-    name: 'Sarah Johnson',
-    username: 'sarahj',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Michael Chen',
-    username: 'mchen',
-  },
-  {
-    id: '3',
-    name: 'Emily Rodriguez',
-    username: 'emilyr',
-    isVerified: true,
-  },
-  {
-    id: '4',
-    name: 'David Thompson',
-    username: 'dthompson',
-  },
-  {
-    id: '5',
-    name: 'Maria Garcia',
-    username: 'mariag',
-  },
-];
+import { MOCK_SUGGESTED_USERS } from '@/src/constants/mocks';
 
 export function RightSidebar() {
   return (
-    <aside className="hidden lg:block w-80 fixed right-0 top-0 h-screen overflow-y-auto scrollbar-hide pt-4 px-4">
+    <aside className="hidden lg:block w-70 fixed right-0 top-0 h-screen overflow-y-auto scrollbar-hide pt-4 px-4">
       {/* Current User */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
@@ -76,7 +39,7 @@ export function RightSidebar() {
         </div>
 
         <div className="space-y-4">
-          {suggestedUsers.map((user) => (
+          {MOCK_SUGGESTED_USERS.map((user) => (
             <div key={user.id} className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white font-semibold text-sm">
