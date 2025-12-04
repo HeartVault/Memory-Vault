@@ -2,7 +2,7 @@
 
 import { Sidebar } from '@/src/features/explore/components/Sidebar';
 
-export default function ExploreLayout({
+export default function MessagesLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -10,11 +10,10 @@ export default function ExploreLayout({
   return (
     <div className="flex min-h-screen bg-[#0a0a0a] overflow-x-hidden">
       <Sidebar />
-
-      {/* Main Content */}
       <main className="flex-1 ml-20 transition-all duration-300 overflow-x-hidden">
         {children}
       </main>
     </div>
   );
 }
+

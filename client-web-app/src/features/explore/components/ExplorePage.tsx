@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { StoriesBar } from './StoriesBar';
 import { FeedPost } from './FeedPost';
+import { RightSidebar } from './RightSidebar';
 
 // Mock data - only posts (no memories) for the "All" page
 const mockPosts = [
@@ -132,26 +133,31 @@ export function ExplorePage() {
   }, [loadMorePosts]);
 
   return (
-    <div className="max-w-2xl mx-auto pt-6 pb-8">
-      {/* Stories */}
-      <StoriesBar />
+    <>
+      <div className="max-w-2xl mx-auto pt-6 pb-8 lg:mr-80">
+        {/* Stories */}
+        <StoriesBar />
 
-      {/* Feed */}
-      <div className="space-y-0">
-        {posts.map((post) => (
-          <FeedPost key={post.id} {...post} />
-        ))}
+        {/* Feed */}
+        <div className="space-y-0">
+          {posts.map((post) => (
+            <FeedPost key={post.id} {...post} />
+          ))}
+        </div>
+
+        {/* Loading indicator */}
+        {isLoading && (
+          <div className="flex items-center justify-center py-8">
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+              <p className="text-gray-400 text-sm">Loading more posts...</p>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Loading indicator */}
-      {isLoading && (
-        <div className="flex items-center justify-center py-8">
-          <div className="flex flex-col items-center gap-4">
-            <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-            <p className="text-gray-400 text-sm">Loading more posts...</p>
-          </div>
-        </div>
-      )}
-    </div>
+      {/* Right Sidebar */}
+      <RightSidebar />
+    </>
   );
 }
