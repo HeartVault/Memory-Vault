@@ -1,5 +1,6 @@
 import { View, TouchableOpacity, ActivityIndicator, Text } from 'react-native';
 import { useState } from 'react';
+import { router } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Input } from '@/src/components/ui';
 
@@ -13,32 +14,11 @@ export function SignupForm() {
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-      return;
-    }
+  const handleSubmit =  () => {
 
-    if (formData.password !== formData.confirmPassword) {
-      // TODO: Show error message
-      return;
-    }
-
-    if (!agreeToTerms) {
-      // TODO: Show error message
-      return;
-    }
-
-    setIsLoading(true);
-
-    // TODO: Implement actual signup logic
     console.log('Signup:', formData);
+    router.replace('/(tabs)/explore');
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      // TODO: Navigate to home after successful signup
-      // router.replace('/(tabs)/');
-    }, 1000);
   };
 
   const isFormValid =
@@ -132,7 +112,7 @@ export function SignupForm() {
       {/* Submit button */}
       <TouchableOpacity
         onPress={handleSubmit}
-        disabled={isLoading || !isFormValid}
+        disabled={false}
         className="w-full mt-1"
         activeOpacity={0.8}
       >

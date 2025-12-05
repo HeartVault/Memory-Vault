@@ -21,8 +21,8 @@ export function LoginForm() {
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      // TODO: Navigate to home after successful login
-      // router.replace('/(tabs)/');
+      // Navigate to explore tabs after successful login
+      router.replace('/(tabs)/explore');
     }, 1000);
   };
 
