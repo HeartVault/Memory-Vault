@@ -1,9 +1,8 @@
-import 'global.css';
 import { View, Text, StyleSheet } from 'react-native';
 
 export default function Index() {
   return (
-    <View style={styles.container}>
+    <View className='flex-1 items-center justify-center bg-red-400'>
       <Text style={styles.text}>Hello</Text>
     </View>
   );
