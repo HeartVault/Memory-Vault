@@ -7,60 +7,71 @@ async function signup({
   first_name,
   last_name,
   username,
+  redirectUrl,
 }: SignupParmas) {
   try {
     const supabase = await createSupabaseServer();
-  const response = await  supabase.auth.signUp({
-        email,
-        password,
-        options:{
-            data:{
-                first_name,
-                last_name,
-                username
-            }
-        }
-    })
 
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          first_name,
+          last_name,
+          username,
+        },
+        emailRedirectTo: redirectUrl,
+      },
+      
+    });
 
-    return {
-        user:response.data.user,
-        session:response.data.session
+    if (error) {
+      console.log(error)
+      throw new AuthError(error.message);
+    } else if (!data.user && !data.session) {
+      throw new AuthError("Email already registered");
     }
 
-
+    return {
+      user: data.user,
+      session: data.session,
+    };
   } catch (error: any) {
-    throw new AuthError(error.message);
+    throw error;
   }
 }
 
-async function signin({email, password} : SigninParams) {
-    try {
-        const supabase = await createSupabaseServer();
-        const response = await supabase.auth.signInWithPassword({
-            email,
-            password
-        })
-
-        return {
-            user:response.data.user,
-            session:response.data.session
-        }
-
-    } catch (error:any) {
+async function signin({ email, password }: SigninParams) {
+  try {
+    const supabase = await createSupabaseServer();
+    const {data,error} = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+   
+    if(error){
+        console.log(error)
         throw new AuthError(error.message)
     }
-}
 
-async function forgotPassword({email}:forgotPasswordParams) {
-    const supabase = await createSupabaseServer();
-    const response = await supabase.auth.resetPasswordForEmail(email);
 
     return {
-        response: response.data,
-    }
+      user: data.user,
+      session: data.session,
+    };
+  } catch (error: any) {
+    throw error;
+  }
 }
 
+async function forgotPassword({ email }: forgotPasswordParams) {
+  const supabase = await createSupabaseServer();
+  const response = await supabase.auth.resetPasswordForEmail(email);
 
+  return {
+    response: response.data,
+  };
+}
 
-export { signup, signin, forgotPassword,  };
+export { signup, signin, forgotPassword };

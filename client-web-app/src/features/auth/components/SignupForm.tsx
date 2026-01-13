@@ -5,35 +5,47 @@ import { Button } from '@/src/components/ui/button';
 import { Input } from '@/src/components/ui/input';
 import { Label } from '@/src/components/ui/label';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export function SignupForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    first_name: '',
+    last_name:'',
+    username:'',
     email: '',
     password: '',
     confirmPassword: '',
   });
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+ 
     
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match');
       return;
-    }
+    } 
 
-    setIsLoading(true);
-    
-    // TODO: Implement actual signup logic
-    console.log('Signup:', formData);
-    
-    // Simulate API call
-    setTimeout(() => {
+    try { 
+        setIsLoading(true);
+        const response = await axios.post('/api/auth/signup', formData );
+        if(response.data !== null){
+          router.push('/auth/verify-email');
+        }
+    } catch (error) {
+      console.log(error)
+    }
+    finally{
       setIsLoading(false);
-    }, 1000);
+    }
+  
+    
+  
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,27 +56,50 @@ export function SignupForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-5 ">
       {/* Name field */}
-      <div className="space-y-2">
-        <Label htmlFor="name">Full Name</Label>
+
+      <div className='flex items-center gap-4 '>   
+      <div className="space-y-2 flex-1">
+        <Label htmlFor="first_name">First Name</Label>
+        <div className="relative">
+          <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <Input
+            id="first_name"
+            name="first_name"
+            type="text"
+            placeholder="John"
+            value={formData.first_name}
+            onChange={handleChange}
+            required
+            className="pl-10 w-full"
+          />
+        </div>
+      </div>
+         <div className="space-y-2 flex-1">
+        <Label htmlFor="last_name">Last Name</Label>
         <div className="relative">
           <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
           <Input
             id="name"
-            name="name"
+            name="last_name"
             type="text"
-            placeholder="John Doe"
-            value={formData.name}
+            placeholder="Doe"
+            value={formData.last_name}
             onChange={handleChange}
             required
-            className="pl-10"
+            className="pl-10 w-full"
           />
         </div>
+
       </div>
 
+
+</div>
+
+<div className='flex items-center  gap-4'>
       {/* Email field */}
-      <div className="space-y-2">
+      <div className="space-y-2 flex-1">
         <Label htmlFor="email">Email</Label>
         <div className="relative">
           <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -81,8 +116,29 @@ export function SignupForm() {
         </div>
       </div>
 
+      {/* username */}
+          <div className="space-y-2 flex-1">
+        <Label htmlFor="username">Username</Label>
+        <div className="relative">
+          <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <Input
+            id="username"
+            name="username"
+            type="text"
+            placeholder="johndoe12"
+            value={formData.username}
+            onChange={handleChange}
+            required
+            className="pl-10 "
+          />
+        </div>
+      </div>
+</div>
+
+
+<div className='flex items-center gap-4'>
       {/* Password field */}
-      <div className="space-y-2">
+      <div className="space-y-2 flex-1">
         <Label htmlFor="password">Password</Label>
         <div className="relative">
           <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -113,7 +169,7 @@ export function SignupForm() {
       </div>
 
       {/* Confirm Password field */}
-      <div className="space-y-2">
+      <div className="space-y-2 flex-1">
         <Label htmlFor="confirmPassword">Confirm Password</Label>
         <div className="relative">
           <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -139,8 +195,9 @@ export function SignupForm() {
             )}
           </button>
         </div>
+        <p className="text-xs text-gray-500">Must be at least 8 characters</p>
       </div>
-
+</div>
       {/* Terms and conditions */}
       <div className="flex items-start space-x-2">
         <input
@@ -170,33 +227,8 @@ export function SignupForm() {
         {isLoading ? 'Creating account...' : 'Create Account'}
       </Button>
 
-      {/* Divider */}
-      <div className="relative my-6">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-white/10"></div>
-        </div>
-        <div className="relative flex justify-center text-sm">
-          <span className="px-4 bg-[#0a0a0a] text-gray-400">Or continue with</span>
-        </div>
-      </div>
+  
 
-      {/* Social login buttons */}
-      <div className="grid grid-cols-2 gap-4">
-        <Button
-          type="button"
-          variant="outline"
-          className="glass border-white/20 text-white hover:bg-white/10 rounded-full"
-        >
-          Google
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          className="glass border-white/20 text-white hover:bg-white/10 rounded-full"
-        >
-          GitHub
-        </Button>
-      </div>
     </form>
   );
 }

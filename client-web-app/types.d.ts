@@ -4,6 +4,7 @@ declare type SignupParmas = {
     first_name:string,
     last_name:string,
     username:string
+    redirectUrl:string
 }
 
 declare type SigninParams ={

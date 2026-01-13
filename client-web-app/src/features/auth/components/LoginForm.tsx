@@ -5,25 +5,38 @@ import { Button } from '@/src/components/ui/button';
 import { Input } from '@/src/components/ui/input';
 import { Label } from '@/src/components/ui/label';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { toast } from "sonner"
 import Link from 'next/link';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    
-    // TODO: Implement actual login logic
-    console.log('Login:', { email, password });
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+
+        try { 
+            setIsLoading(true);
+            const response = await axios.post('/api/auth/signin', {email,password} );
+           if(response.data.session){
+            toast.success("Signed in successfully!");
+            router.replace('/explore')
+           } else {
+            toast.error("Invalid credentials, please try again.");
+           }
+        } catch (error) {
+            toast.error(error instanceof Error ? error.message : "An unexpected error occurred.");
+        }
+        finally{
+          setIsLoading(false);
+        }
+
   };
 
   return (
@@ -113,7 +126,7 @@ export function LoginForm() {
       </div>
 
       {/* Social login buttons */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         <Button
           type="button"
           variant="outline"
@@ -121,13 +134,7 @@ export function LoginForm() {
         >
           Google
         </Button>
-        <Button
-          type="button"
-          variant="outline"
-          className="glass border-white/20 text-white hover:bg-white/10 rounded-full"
-        >
-          GitHub
-        </Button>
+   
       </div>
     </form>
   );

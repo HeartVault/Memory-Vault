@@ -52,7 +52,7 @@ export function AuthLayout({
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a] px-4 sm:px-6 lg:px-8 py-12"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a] px-4 sm:px-6 lg:px-8 py-12 "
     >
       {/* Animated mesh gradient background */}
       <div className="absolute inset-0 gradient-mesh opacity-40" />
@@ -90,7 +90,7 @@ export function AuthLayout({
       {/* Content */}
       <div
         ref={contentRef}
-        className="relative z-10 w-full max-w-md"
+        className="relative z-10 w-full max-w-xl "
         style={{ opacity: 1 }}
       >
         <div className="glass rounded-2xl border border-white/10 p-8 shadow-2xl">
