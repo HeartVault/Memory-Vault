@@ -3,29 +3,15 @@
 import { Button } from '@/src/components/ui/button';
 import { User, MoreHorizontal } from 'lucide-react';
 import { MOCK_SUGGESTED_USERS } from '@/src/constants/mocks';
+import UserCard from './UserCard';
 
 export function RightSidebar() {
+
+
   return (
     <aside className="hidden lg:block w-70 fixed right-0 top-0 h-screen overflow-y-auto scrollbar-hide pt-4 px-4">
-      {/* Current User */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white font-semibold">
-            <User className="w-7 h-7" />
-          </div>
-          <div>
-            <p className="text-white font-semibold text-sm">Your Profile</p>
-            <p className="text-gray-400 text-xs">@username</p>
-          </div>
-        </div>
-        <Button
-          variant="ghost"
-          className="text-emerald-400 hover:text-emerald-300 text-xs font-semibold p-0 h-auto"
-        >
-          Switch
-        </Button>
-      </div>
-
+ 
+   <UserCard />
       {/* Suggested for you */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
