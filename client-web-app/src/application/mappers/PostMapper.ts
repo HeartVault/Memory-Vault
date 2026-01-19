@@ -1,4 +1,4 @@
-import { Post } from "@/src/domain/entities/Post";
+import { Post } from "@/src/domain";
 import { PostId, UserId, Caption, MediaUrl, PostType, Visibility, Year } from "@/src/domain";
 import { PostResponseDto } from "../dto/posts/PostResponseDto";
 
@@ -6,7 +6,7 @@ export type PostRow = {
     post_id:string;
     user_id:string;
     caption:string;
-    media_url:string | null;
+    media_url:string[] | null;
     type:string;
     visibility:string;
     location:string | null;
@@ -23,7 +23,7 @@ export class PostMapper {
             post_id: PostId.create(row.post_id),
             user_id: UserId.create(row.user_id),
             caption: Caption.create(row.caption),
-            media_url: row.media_url ? MediaUrl.create(row.media_url) : null,
+            media_url: row.media_url ? row.media_url.map((url) => MediaUrl.create(url))  : null,
             type: PostType.create(row.type),
             visibility: Visibility.create(row.visibility),
             location: row.location,

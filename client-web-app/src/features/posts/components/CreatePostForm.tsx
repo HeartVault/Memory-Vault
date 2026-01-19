@@ -94,10 +94,10 @@ export function CreatePostForm({ postType, onSubmit }: CreatePostFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (media.length === 0) {
-      alert('Please add at least one photo or video');
-      return;
-    }
+    // if (media.length === 0) {
+    //   alert('Please add at least one photo or video');
+    //   return;
+    // }
 
     onSubmit({
       type: postType,

@@ -1,12 +1,12 @@
 import { Caption, MediaUrl, PostId, UserId, Visibility, Year, PostType as posttype } from "../value-objects";
 
-export type PostType = {
+export type TPostType = {
   post_id: PostId;
   user_id: UserId;
   caption: Caption;
   created_at: Date;
   type: posttype;
-  media_url?: MediaUrl | null;
+  media_url?: MediaUrl[] | null;
   event?: string | null;
   location?: string | null;
   year?: Year | null;
@@ -14,9 +14,9 @@ export type PostType = {
 };
 
 export class Post {
-  private constructor(private readonly props: PostType) {}
+  private constructor(private readonly props: TPostType) {}
 
-    static create(props: PostType): Post {
+    static create(props: TPostType): Post {
     return new Post(props);
   }
 
@@ -41,7 +41,7 @@ export class Post {
   }
 
   get media_url() {
-    return this.props.media_url?.getValue() || null;
+    return this.props.media_url?.map(url => url.getValue())|| null;
   }
 
   get event() {

@@ -7,9 +7,11 @@ import { PostMapper } from "@/src/application/mappers/PostMapper";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = req.json();
+    const body = await req.json();
+    console.log(body)
     const dto = createPostDto.parse(body);
 
+    console.log(dto)
     const repo = new SupabasePostRepository();
     const useCase = new CreatePostUseCases(repo);
 

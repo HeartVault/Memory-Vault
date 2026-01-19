@@ -5,19 +5,38 @@ import { CreatePostForm } from './CreatePostForm';
 import { X, ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/src/components/ui/button';
+import axios from 'axios';
 
 export function CreatePostPage() {
   const router = useRouter();
   const [postType, setPostType] = useState<'memory' | 'moment'>('moment');
+  
 
   const handleBack = () => {
     router.back();
   };
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = async (data: any) => {
     console.log('Creating post:', { ...data, type: postType });
     // In production, this would call an API
-    router.back();
+
+
+
+    const response = await  axios.post('/api/post',{
+  "user_id": "db2315f3-543b-43bc-bc2e-d47a10911c4e",
+  "caption": "First day back on the grind 🚀",
+  "type": "moment",
+  "media_url": ["https://example.com/media/photo-1.jpg"],
+  "visibility": "friends",
+  "year": 2026,
+  "event": "Back to School",
+  "location": "Lagos, Nigeria"
+}
+);
+
+console.log(response);
+
+    // router.back();
   };
 
   return (

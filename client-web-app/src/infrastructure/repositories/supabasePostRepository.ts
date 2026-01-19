@@ -1,12 +1,12 @@
 import { createSupabaseServer } from "../supabase";
-import { PostRepository } from "@/src/domain/repositories/PostRepository";
-import { PostMapper, PostRow } from "@/src/application/mappers/PostMapper";
-import { DomainError } from "@/src/domain/errors/Errors";
+import { PostRepository } from "@/src/domain";
+import { PostMapper, PostRow } from "@/src/application";
+import { DomainError } from "@/src/domain";
 import { PostId, UserId } from "@/src/domain";
-import { Post } from "@/src/domain/entities/Post";
+import { Post } from "@/src/domain";
 
 export class SupabasePostRepository  implements PostRepository {
-  private readonly table = "posts";
+  private readonly table = "post";
 
   async save(post: Post): Promise<void> {
     const supabase = await createSupabaseServer();

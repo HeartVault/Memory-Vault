@@ -23,7 +23,7 @@ export class CreatePostUseCases {
       caption: Caption.create(dto.caption),
       type: PostType.create(dto.type),
       visibility: Visibility.create(dto.visibility),
-      media_url: dto.media_url ? MediaUrl.create(dto.media_url) : null,
+      media_url: dto.media_url ? dto.media_url.map((url => MediaUrl.create(url)))  : null,
       event: dto.event ?? null,
       location: dto.location ?? null,
       year: dto.year ? Year.create(dto.year) : null,

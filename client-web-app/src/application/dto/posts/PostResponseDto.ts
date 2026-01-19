@@ -5,7 +5,7 @@ export const postResponseDto = z.object({
   user_id: z.string(),
   type: z.enum(["moment", "memory"]),
   caption: z.string().min(1).max(2200),
-  media_url: z.string().url().nullable().optional(),
+  media_url: z.array(z.string().url()).optional().nullable(),
   visibility: z.enum(["public", "friends", "family"]),
   year: z.number().int().min(1900).max(new Date().getFullYear()).nullable(),
   event: z.string().nullable(),
